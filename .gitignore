@@ -2,3 +2,35 @@
 *.exe
 *.dll
 *.o
+
+# VSCode
+.vscode
+
+# Exclude from upgrade
+tools/upgrade/*.c
+tools/upgrade/*.h
+
+# Exclude upgrade binary
+cmd/upgrade/upgrade
+
+# Exclude example binaries
+examples/*/*.db
+examples/custom_func/custom_func
+examples/hook/hook
+examples/limit/limit
+examples/*/*.so
+examples/*/extension
+examples/simple/simple
+examples/trace/trace
+examples/vtable/vtable
+
+debug.test
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+.idea

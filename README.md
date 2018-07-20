@@ -1,97 +1,69 @@
-go-sqlite3
-==========
+# Go-SQLite3
 
 [![GoDoc Reference](https://godoc.org/github.com/mattn/go-sqlite3?status.svg)](http://godoc.org/github.com/mattn/go-sqlite3)
 [![Build Status](https://travis-ci.org/mattn/go-sqlite3.svg?branch=master)](https://travis-ci.org/mattn/go-sqlite3)
 [![Coverage Status](https://coveralls.io/repos/mattn/go-sqlite3/badge.svg?branch=master)](https://coveralls.io/r/mattn/go-sqlite3?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mattn/go-sqlite3)](https://goreportcard.com/report/github.com/mattn/go-sqlite3)
 
-Description
------------
+**Current Version: 2.0.0**
+
+**Please note that version 2.0.0 is not backwards compatible**
+
+## Documentation
+
+[More documentation is available in our Wiki](https://github.com/mattn/go-sqlite3/wiki)
+
+## Description
 
 sqlite3 driver conforming to the built-in database/sql interface
 
-Installation
-------------
+Supported Golang version:
+- 1.9.x
+- 1.10.x
 
-This package can be installed with the go get command:
+[This package follows the official Golang Release Policy.](https://golang.org/doc/devel/release.html#policy)
 
-    go get github.com/mattn/go-sqlite3
+## Requirements
+
+* Go: 1.9 or higher.
+* GCC (Go-SQLite3 is a `CGO` package)
 
 _go-sqlite3_ is *cgo* package.
 If you want to build your app using go-sqlite3, you need gcc.
-However, if you install _go-sqlite3_ with `go install github.com/mattn/go-sqlite3`, you don't need gcc to build your app anymore.
+However, after you have built and installed _go-sqlite3_ with `go install github.com/mattn/go-sqlite3` (which requires gcc), you can build your app without relying on gcc in future.
 
-Documentation
--------------
+**Important: because this is a `CGO` enabled package you are required to set the environment variable `CGO_ENABLED=1` and have a `gcc` compile present within your path.**
 
-API documentation can be found here: http://godoc.org/github.com/mattn/go-sqlite3
+## Installation
 
-Examples can be found under the `./_example` directory
+```bash
+go get github.com/mattn/go-sqlite3/driver
+```
 
-FAQ
----
+## Usage
 
-* Want to build go-sqlite3 with libsqlite3 on my linux.
+`Go-SQLite3 is an implementation of Go's database/sql/driver interface. You only need to import the driver and can use the full database/sql API then.
 
-    Use `go build --tags "libsqlite3 linux"`
+Use `sqlite3` as `drivername` and a valid [DSN](https://github.com/mattn/go-sqlite3/wiki/DSN) as `dataSourceName`:
 
-* Want to build go-sqlite3 with libsqlite3 on OS X.
+```go
+import (
+    "database/sql"
+    _ "github.com/mattn/go-sqlite3/driver"
+)
 
-    Install sqlite3 from homebrew: `brew install sqlite3`
+db, err := sql.Open("sqlite3", "file:test.db")
+```
 
-    Use `go build --tags "libsqlite3 darwin"`
+[Examples are available in our Wiki](https://github.com/mattn/go-sqlite3/wiki/Examples)
 
-* Want to build go-sqlite3 with icu extension.
+# License
 
-   Use `go build --tags "icu"`
-
-   Available extensions: `json1`, `fts5`, `icu`, `see`
-
-* Can't build go-sqlite3 on windows 64bit.
-
-    > Probably, you are using go 1.0, go1.0 has a problem when it comes to compiling/linking on windows 64bit.
-    > See: [#27](https://github.com/mattn/go-sqlite3/issues/27)
-
-* Getting insert error while query is opened.
-
-    > You can pass some arguments into the connection string, for example, a URI.
-    > See: [#39](https://github.com/mattn/go-sqlite3/issues/39)
-
-* Do you want to cross compile? mingw on Linux or Mac?
-
-    > See: [#106](https://github.com/mattn/go-sqlite3/issues/106)
-    > See also: http://www.limitlessfx.com/cross-compile-golang-app-for-windows-from-linux.html
-
-* Want to get time.Time with current locale
-
-    Use `_loc=auto` in SQLite3 filename schema like `file:foo.db?_loc=auto`.
-
-* Can I use this in multiple routines concurrently?
-
-    Yes for readonly. But, No for writable. See [#50](https://github.com/mattn/go-sqlite3/issues/50), [#51](https://github.com/mattn/go-sqlite3/issues/51), [#209](https://github.com/mattn/go-sqlite3/issues/209).
-
-* Why is it racy if I use a `sql.Open("sqlite3", ":memory:")` database?
-
-    Each connection to :memory: opens a brand new in-memory sql database, so if
-    the stdlib's sql engine happens to open another connection and you've only
-    specified ":memory:", that connection will see a brand new database. A
-    workaround is to use "file::memory:?mode=memory&cache=shared". Every
-    connection to this string will point to the same in-memory database. See
-    [#204](https://github.com/mattn/go-sqlite3/issues/204) for more info.
-
-License
--------
-
-MIT: http://mattn.mit-license.org/2012
+MIT: http://mattn.mit-license.org/2018
 
 sqlite3-binding.c, sqlite3-binding.h, sqlite3ext.h
 
 The -binding suffix was added to avoid build failures under gccgo.
 
-In this repository, those files are an amalgamation of code that was copied from SQLite3. The license of that code is the same as the license of SQLite3.
-
-Author
-------
-
-Yasuhiro Matsumoto (a.k.a mattn)
+In this repository, those files are an amalgamation of code that was copied from SQLite3. 
+The license of that code is the same as the license of SQLite3.
