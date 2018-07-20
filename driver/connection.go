@@ -50,6 +50,12 @@ type SQLiteConn struct {
 func (c *SQLiteConn) PRAGMA(name, value string) error {
 	stmt := fmt.Sprintf("PRAGMA %s = %s;", name, value)
 
+	// Use switch for future modifications to PRAGMA's
+	switch name {
+	case PRAGMA_SEE_KEY, PRAGMA_SEE_REKEY:
+		stmt = fmt.Sprintf("PRAGMA %s = '%s'", name, strings.Replace(value, "'", "''", -1))
+	}
+
 	cs := C.CString(stmt)
 	rv := C.sqlite3_exec(c.db, cs, nil, nil, nil)
 	C.free(unsafe.Pointer(cs))

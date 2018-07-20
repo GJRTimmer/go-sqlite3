@@ -466,6 +466,9 @@ type Config struct {
 	// Database
 	Database string
 
+	// Encryption Key
+	Key string
+
 	// Mode of the SQLite database
 	Mode Mode
 
@@ -603,6 +606,10 @@ func (cfg *Config) FormatDSN() string {
 	var buf bytes.Buffer
 
 	params := url.Values{}
+	if len(cfg.Key) > 0 {
+		params.Set("key", cfg.Key)
+	}
+
 	if len(cfg.Cache.String()) > 0 {
 		params.Set("cache", cfg.Cache.String())
 	}
@@ -759,6 +766,22 @@ func (cfg *Config) createConnection() (driver.Conn, error) {
 		return nil, errors.New("sqlite succeeded without returning a database")
 	}
 
+	// Create basic connection
+	conn := &SQLiteConn{
+		cfg:    cfg,
+		db:     db,
+		tz:     cfg.TimeZone,
+		txlock: cfg.TransactionLock.Value(),
+	}
+
+	// Handle Encryption key before anything else
+	if len(cfg.Key) > 0 {
+		if err := conn.PRAGMA(PRAGMA_SEE_KEY, cfg.Key); err != nil {
+			C.sqlite3_close_v2(db)
+			return nil, err
+		}
+	}
+
 	// Set SQLITE Busy Timeout Handler
 	if cfg.BusyTimeout > 0 {
 		rv = C.sqlite3_busy_timeout(db, C.int(cfg.BusyTimeout))
@@ -769,14 +792,6 @@ func (cfg *Config) createConnection() (driver.Conn, error) {
 
 			return nil, Error{Code: ErrNo(rv)}
 		}
-	}
-
-	// Create basic connection
-	conn := &SQLiteConn{
-		cfg:    cfg,
-		db:     db,
-		tz:     cfg.TimeZone,
-		txlock: cfg.TransactionLock.Value(),
 	}
 
 	// At this point we have the following
@@ -1019,6 +1034,11 @@ func ParseDSN(dsn string) (cfg *Config, err error) {
 
 		if !strings.HasPrefix(dsn, "file:") {
 			dsn = dsn[:pos]
+		}
+
+		// Parse encryption key
+		if val := params.Get("key"); val != "" {
+			cfg.Key = val
 		}
 
 		// Parse Autentication
