@@ -481,7 +481,9 @@ func TestParseDSN(t *testing.T) {
 			JournalMode: JournalModeWAL,
 			Synchronous: SynchronousNormal,
 		},
-		"test.db?journal=auto": nil,
+		"test.db?journal=auto": &Config{
+			JournalMode: JournalModeAuto,
+		},
 	}
 
 	for dsn, c := range journalCases {

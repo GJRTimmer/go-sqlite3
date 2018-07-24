@@ -10,9 +10,6 @@
 package sqlite3
 
 /*
-#cgo CFLAGS: -DSQLITE_ENABLE_PREUPDATE_HOOK
-#cgo LDFLAGS: -lm
-
 #include <sqlite3-binding.h>
 #include <stdlib.h>
 */

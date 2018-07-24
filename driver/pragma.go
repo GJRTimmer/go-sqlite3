@@ -8,7 +8,6 @@
 package sqlite3
 
 const (
-	PRAGMA_SSE_KEY                 = "key"
 	PRAGMA_AUTO_VACUUM             = "auto_vacuum"
 	PRAGMA_CASE_SENSITIVE_LIKE     = "case_sensitive_like"
 	PRAGMA_DEFER_FOREIGN_KEYS      = "defer_foreign_keys"
@@ -18,6 +17,8 @@ const (
 	PRAGMA_LOCKING_MODE            = "locking_mode"
 	PRAGMA_QUERY_ONLY              = "query_only"
 	PRAGMA_RECURSIVE_TRIGGERS      = "recursive_triggers"
+	PRAGMA_SEE_KEY                 = "key"
+	PRAGMA_SEE_REKEY               = "rekey"
 	PRAGMA_SECURE_DELETE           = "secure_delete"
 	PRAGMA_SYNCHRONOUS             = "synchronous"
 	PRAGMA_WRITABLE_SCHEMA         = "writable_schema"
