@@ -7,8 +7,33 @@
 .vscode
 
 # Exclude from upgrade
-upgrade/*.c
-upgrade/*.h
+tools/upgrade/*.c
+tools/upgrade/*.h
 
 # Exclude upgrade binary
-upgrade/upgrade
+cmd/upgrade/upgrade
+cmd/upgrade/sqlite3.c
+cmd/upgrade/sqlite3.h
+cmd/upgrade/sqlite3ext.h
+
+# Exclude example binaries
+examples/*/*.db
+examples/custom_func/custom_func
+examples/hook/hook
+examples/limit/limit
+examples/*/*.so
+examples/*/extension
+examples/simple/simple
+examples/trace/trace
+examples/vtable/vtable
+
+debug.test
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+.idea
