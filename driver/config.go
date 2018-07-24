@@ -33,6 +33,21 @@ _sqlite3_open_v2(const char *filename, sqlite3 **ppDb, int flags, const char *zV
   return sqlite3_open_v2(filename, ppDb, flags, zVfs);
 #endif
 }
+
+static int codec_key(sqlite3 *db, const char *name, const void *p, int n) {
+#ifdef SQLITE_HAS_CODEC
+	return sqlite3_key_v2(db, name, (n > 0 ? p : 0), n);
+#else
+	return -1;
+#endif
+}
+static int codec_rekey(sqlite3 *db, const char *name, const void *p, int n) {
+#ifdef SQLITE_HAS_CODEC
+	return sqlite3_rekey_v2(db, name, (n > 0 ? p : 0), n);
+#else
+	return -1;
+#endif
+}
 */
 import "C"
 import (

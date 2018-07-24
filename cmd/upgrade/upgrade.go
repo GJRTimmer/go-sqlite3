@@ -129,9 +129,9 @@ func main() {
 		var f *os.File
 		switch path.Base(zf.Name) {
 		case "sqlite3.c":
-			f, err = os.Create("sqlite3-binding.c")
+			f, err = os.Create("sqlite3.c")
 		case "sqlite3.h":
-			f, err = os.Create("sqlite3-binding.h")
+			f, err = os.Create("sqlite3.h")
 		case "sqlite3ext.h":
 			f, err = os.Create("sqlite3ext.h")
 		default:
@@ -155,7 +155,7 @@ func main() {
 		for scanner.Scan() {
 			text := scanner.Text()
 			if text == `#include "sqlite3.h"` {
-				text = `#include "sqlite3-binding.h"`
+				text = `#include "sqlite3.h"`
 			}
 			_, err = fmt.Fprintln(f, text)
 			if err != nil {
@@ -209,10 +209,10 @@ func main() {
 	}
 
 	// Merge SQLite User Authentication into amalgamation
-	if err := mergeFile("userauth.c", "sqlite3-binding.c"); err != nil {
+	if err := mergeFile("userauth.c", "sqlite3.c"); err != nil {
 		log.Fatal(err)
 	}
-	if err := mergeFile("userauth.h", "sqlite3-binding.h"); err != nil {
+	if err := mergeFile("userauth.h", "sqlite3.h"); err != nil {
 		log.Fatal(err)
 	}
 

@@ -12,6 +12,9 @@ tools/upgrade/*.h
 
 # Exclude upgrade binary
 cmd/upgrade/upgrade
+cmd/upgrade/sqlite3.c
+cmd/upgrade/sqlite3.h
+cmd/upgrade/sqlite3ext.h
 
 # Exclude example binaries
 examples/*/*.db
