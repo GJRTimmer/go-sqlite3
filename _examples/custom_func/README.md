@@ -1,5 +1,5 @@
 ## How to compile
 
 ```bash
-go build -v github.com/mattn/go-sqlite3/examples/custom_func
+go build -v github.com/mattn/go-sqlite3/_examples/custom_func
 ```

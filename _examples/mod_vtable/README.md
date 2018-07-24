@@ -1,7 +1,7 @@
 ## How to compile
 
 ```bash
-cd ${GOPATH}/src/github.com/mattn/go-sqlite3/examples/mod_vtable
+cd ${GOPATH}/src/github.com/mattn/go-sqlite3/_examples/mod_vtable
 make all
 ```
 

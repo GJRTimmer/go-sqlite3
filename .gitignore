@@ -2,6 +2,7 @@
 *.exe
 *.dll
 *.o
+*.so
 
 # VSCode
 .vscode
@@ -17,15 +18,14 @@ cmd/upgrade/sqlite3.h
 cmd/upgrade/sqlite3ext.h
 
 # Exclude example binaries
-examples/*/*.db
-examples/custom_func/custom_func
-examples/hook/hook
-examples/limit/limit
-examples/*/*.so
-examples/*/extension
-examples/simple/simple
-examples/trace/trace
-examples/vtable/vtable
+_examples/*/*.db
+_examples/custom_func/custom_func
+_examples/hook/hook
+_examples/limit/limit
+_examples/*/extension
+_examples/simple/simple
+_examples/trace/trace
+_examples/vtable/vtable
 
 debug.test
 .DS_Store
