@@ -18,6 +18,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"hash"
+	"os"
 	"testing"
 )
 
@@ -138,7 +139,7 @@ func TestSuiteId(t *testing.T) {
 
 func TestEncryption(t *testing.T) {
 	tempFilename := TempFilename(t)
-	//defer os.Remove(tempFilename)
+	defer os.Remove(tempFilename)
 
 	fmt.Println(tempFilename)
 
@@ -147,7 +148,7 @@ func TestEncryption(t *testing.T) {
 	cfg.Key = "aes-hmac:256:password"
 
 	// OpenDB
-	db := sql.OpenDB(cfg)
+	db := sql.Open("sqlite3", cfg.FormatDSN())
 	defer db.Close()
 
 	_, err := db.Exec("create table if not exists foo (id integer)")
