@@ -1309,7 +1309,7 @@ func (cfg *Config) FormatDSN() string {
 		params.Set("ignore_check_contraints", "true")
 	}
 
-	if len(cfg.JournalMode) > 0 && cfg.JournalMode != JournalModeDelete {
+	if len(cfg.JournalMode) > 0 && cfg.JournalMode != JournalModeAuto {
 		params.Set("journal", cfg.JournalMode.String())
 	}
 
