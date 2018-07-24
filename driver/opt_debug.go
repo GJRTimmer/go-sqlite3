@@ -4,12 +4,13 @@
 // license that can be found in the LICENSE file.
 
 // +build cgo
-// +build sqlite_json sqlite_json1
+// +build !libsqlite3
+// +build sqlite_debug
 
 package sqlite3
 
 /*
-#cgo CFLAGS: -DSQLITE_ENABLE_JSON1
+#cgo CFLAGS: -DSQLITE_DEBUG=1
 #cgo LDFLAGS: -lm
 */
 import "C"
