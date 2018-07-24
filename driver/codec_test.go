@@ -154,7 +154,7 @@ func TestEncryption(t *testing.T) {
 		t.Fatal("failed to open database")
 	}
 
-	_, err := db.Exec("create table if not exists foo (id integer)")
+	_, err = db.Exec("create table if not exists foo (id integer)")
 	if err != nil {
 		t.Fatalf("failed to create table: %s", err)
 	}
