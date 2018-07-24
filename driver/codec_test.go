@@ -148,8 +148,11 @@ func TestEncryption(t *testing.T) {
 	cfg.Key = "aes-hmac:256:password"
 
 	// OpenDB
-	db := sql.Open("sqlite3", cfg.FormatDSN())
+	db, err := sql.Open("sqlite3", cfg.FormatDSN())
 	defer db.Close()
+	if err != nil {
+		t.Fatal("failed to open database")
+	}
 
 	_, err := db.Exec("create table if not exists foo (id integer)")
 	if err != nil {
